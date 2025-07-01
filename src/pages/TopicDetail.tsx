@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Clock, CheckCircle, Star, Bookmark, ExternalLink, PlayCircle, FileText, Video, Link2, Circle, Users, ThumbsUp, MessageSquare, Share, Download, Code, Zap, ChevronRight } from 'lucide-react';
@@ -8,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
+import { ResourceCard } from '@/components/ResourceCard';
+import { getResourcesByTopic } from '@/data/resourcesDatabase';
 
 const TopicDetail = () => {
   const { topicId } = useParams();
@@ -739,6 +740,9 @@ function TodoList({ todos, onTodoAction }) {
     }
   };
 
+  // Add enhanced resources from database
+  const enhancedResources = getResourcesByTopic(topicId as string);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
@@ -995,51 +999,74 @@ function TodoList({ todos, onTodoAction }) {
           </TabsContent>
 
           <TabsContent value="resources" className="space-y-6">
-            <div className="grid gap-4">
-              {topic.resources.map((resource, index) => (
-                <Card key={index} className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-colors">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center">
-                          {getResourceIcon(resource.type)}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-medium text-white mb-1">{resource.title}</h3>
-                          <p className="text-slate-400 text-sm mb-3 leading-relaxed">{resource.description}</p>
-                          <div className="flex items-center space-x-3 mb-2">
-                            <Badge variant="outline" className="border-slate-600 text-slate-400 text-xs">
-                              {resource.duration}
-                            </Badge>
-                            <Badge className={getDifficultyColor(resource.difficulty)} variant="secondary">
-                              {resource.difficulty}
-                            </Badge>
-                            {resource.free && (
-                              <Badge className="bg-green-600/20 text-green-400 text-xs">
-                                Free
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="flex items-center space-x-4 text-xs text-slate-500">
-                            <div className="flex items-center space-x-1">
-                              <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                              <span>{resource.rating}</span>
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-white mb-2">Learning Resources</h2>
+                <p className="text-slate-400 mb-6">
+                  Curated resources from top platforms including YouTube, GeeksforGeeks, MDN, and more
+                </p>
+              </div>
+
+              {/* Enhanced Resources Section */}
+              {enhancedResources.length > 0 && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-white">Recommended Resources</h3>
+                    <Badge className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300">
+                      {enhancedResources.length} resources
+                    </Badge>
+                  </div>
+                  <div className="grid gap-4">
+                    {enhancedResources.map((resource) => (
+                      <ResourceCard key={resource.id} resource={resource} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Original Resources (if any) */}
+              {topic.resources && topic.resources.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-white">Additional Resources</h3>
+                  <div className="grid gap-4">
+                    {topic.resources.map((resource, index) => (
+                      <Card key={index} className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-colors">
+                        <CardContent className="p-6">
+                          <div className="flex items-start justify-between">
+                            <div className="flex items-start space-x-4">
+                              <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center">
+                                {getResourceIcon(resource.type)}
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="font-medium text-white mb-1">{resource.title}</h3>
+                                <p className="text-slate-400 text-sm mb-3 leading-relaxed">{resource.description}</p>
+                                
+                                <div className="flex items-center space-x-3 mb-2">
+                                  <Badge variant="outline" className="border-slate-600 text-slate-400 text-xs">
+                                    {resource.duration}
+                                  </Badge>
+                                  <Badge className={getDifficultyColor(resource.difficulty)} variant="secondary">
+                                    {resource.difficulty}
+                                  </Badge>
+                                  {resource.free && (
+                                    <Badge className="bg-green-600/20 text-green-400 text-xs">
+                                      Free
+                                    </Badge>
+                                  )}
+                                </div>
+                              </div>
                             </div>
-                            <div className="flex items-center space-x-1">
-                              <Users className="w-3 h-3" />
-                              <span>{resource.views} views</span>
-                            </div>
+                            <Button size="sm" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                              <ExternalLink className="w-4 h-4 mr-1" />
+                              Open
+                            </Button>
                           </div>
-                        </div>
-                      </div>
-                      <Button size="sm" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700">
-                        <ExternalLink className="w-4 h-4 mr-1" />
-                        Open
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
 
