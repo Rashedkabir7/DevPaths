@@ -1,160 +1,153 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, BookOpen, Target, Users, ChevronRight, Star, Clock, Check, TrendingUp, Award, Globe, Code } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Star, Clock, CheckCircle, TrendingUp, Award, Target, Zap, Code, Database, Globe, Smartphone, Shield, Palette, BarChart, Cpu, Cloud, ChevronRight, Play, ExternalLink, Github, Twitter, Linkedin, Mail, Search, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [activeTab, setActiveTab] = useState('roadmaps');
 
-  const roadmaps = [
+  const featuredRoadmaps = [
     {
       id: 'frontend',
       title: 'Frontend Development',
-      description: 'Complete guide to modern frontend development with React, TypeScript, and advanced tooling',
-      topics: 45,
-      duration: '4-8 months',
+      description: 'Master HTML, CSS, JavaScript, React, and modern frontend tools',
+      topics: 12,
+      duration: '6-8 months',
+      learners: '2.5M',
       difficulty: 'Beginner to Advanced',
+      icon: Globe,
       color: 'from-blue-500 to-cyan-500',
-      icon: '💻',
-      category: 'development',
-      learners: '2.1M',
-      rating: 4.8,
-      updated: '2024',
-      skills: ['React', 'TypeScript', 'CSS', 'JavaScript', 'Next.js', 'Tailwind']
+      trending: true
     },
     {
       id: 'backend',
       title: 'Backend Development',
-      description: 'Master server-side development with Node.js, databases, APIs, and cloud deployment',
-      topics: 52,
-      duration: '5-10 months',
-      difficulty: 'Intermediate to Advanced',
-      color: 'from-green-500 to-emerald-500',
-      icon: '⚙️',
-      category: 'development',
+      description: 'Learn server-side programming, databases, and APIs',
+      topics: 15,
+      duration: '7-9 months',
       learners: '1.8M',
-      rating: 4.7,
-      updated: '2024',
-      skills: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Docker', 'AWS']
-    },
-    {
-      id: 'devops',
-      title: 'DevOps Engineer',
-      description: 'Infrastructure as code, CI/CD pipelines, containerization, and cloud platform mastery',
-      topics: 38,
-      duration: '6-12 months',
-      difficulty: 'Advanced',
-      color: 'from-orange-500 to-red-500',
-      icon: '🚀',
-      category: 'operations',
-      learners: '890K',
-      rating: 4.6,
-      updated: '2024',
-      skills: ['Docker', 'Kubernetes', 'AWS', 'Terraform', 'Jenkins', 'Linux']
+      difficulty: 'Intermediate',
+      icon: Database,
+      color: 'from-green-500 to-emerald-500',
+      trending: false
     },
     {
       id: 'fullstack',
-      title: 'Full Stack Developer',
-      description: 'End-to-end web development combining frontend mastery with backend expertise',
-      topics: 68,
-      duration: '8-15 months',
-      difficulty: 'Beginner to Advanced',
-      color: 'from-purple-500 to-pink-500',
-      icon: '🌟',
-      category: 'development',
-      learners: '1.5M',
-      rating: 4.9,
-      updated: '2024',
-      skills: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'AWS', 'Docker']
-    },
-    {
-      id: 'mobile',
-      title: 'Mobile Development',
-      description: 'Build native and cross-platform mobile apps with React Native and Flutter',
-      topics: 42,
-      duration: '6-10 months',
-      difficulty: 'Intermediate',
-      color: 'from-indigo-500 to-purple-500',
-      icon: '📱',
-      category: 'development',
+      title: 'Full Stack Development',
+      description: 'Complete web development from frontend to backend',
+      topics: 20,
+      duration: '10-12 months',
       learners: '1.2M',
-      rating: 4.5,
-      updated: '2024',
-      skills: ['React Native', 'Flutter', 'Swift', 'Kotlin', 'Firebase', 'Expo']
+      difficulty: 'Comprehensive',
+      icon: Code,
+      color: 'from-purple-500 to-pink-500',
+      trending: true
     },
     {
-      id: 'data-science',
+      id: 'data-scientist',
       title: 'Data Science',
-      description: 'Analytics, machine learning, and data visualization for business insights',
-      topics: 55,
-      duration: '8-12 months',
-      difficulty: 'Intermediate to Advanced',
+      description: 'Analytics, machine learning, and data visualization',
+      topics: 18,
+      duration: '9-12 months',
+      learners: '1.1M',
+      difficulty: 'Advanced',
+      icon: BarChart,
       color: 'from-teal-500 to-blue-500',
-      icon: '📊',
-      category: 'data',
-      learners: '950K',
-      rating: 4.4,
-      updated: '2024',
-      skills: ['Python', 'SQL', 'Pandas', 'Scikit-learn', 'TensorFlow', 'Tableau']
+      trending: true
     }
   ];
 
-  const categories = [
-    { id: 'all', label: 'All Paths', count: roadmaps.length },
-    { id: 'development', label: 'Development', count: roadmaps.filter(r => r.category === 'development').length },
-    { id: 'operations', label: 'Operations', count: roadmaps.filter(r => r.category === 'operations').length },
-    { id: 'data', label: 'Data & AI', count: roadmaps.filter(r => r.category === 'data').length }
+  const featuredTopics = [
+    {
+      id: 'react-basics',
+      title: 'React Fundamentals',
+      description: 'Master the building blocks of modern React development',
+      difficulty: 'Intermediate',
+      duration: '3-4 weeks',
+      learners: '1.2M',
+      rating: 4.8,
+      icon: '⚛️'
+    },
+    {
+      id: 'javascript-advanced',
+      title: 'Advanced JavaScript',
+      description: 'Deep dive into ES6+, async programming, and design patterns',
+      difficulty: 'Advanced',
+      duration: '4-6 weeks',
+      learners: '890K',
+      rating: 4.9,
+      icon: '⚡'
+    },
+    {
+      id: 'python-fundamentals',
+      title: 'Python Programming',
+      description: 'Learn Python from basics to advanced programming concepts',
+      difficulty: 'Beginner',
+      duration: '4-5 weeks',
+      learners: '2.1M',
+      rating: 4.8,
+      icon: '🐍'
+    },
+    {
+      id: 'nodejs-backend',
+      title: 'Node.js Backend',
+      description: 'Build scalable server-side applications with Node.js',
+      difficulty: 'Intermediate',
+      duration: '5-7 weeks',
+      learners: '760K',
+      rating: 4.7,
+      icon: '🟢'
+    }
   ];
 
   const stats = [
-    { icon: BookOpen, value: '300+', label: 'Learning Topics', color: 'text-blue-400' },
-    { icon: Target, value: '6', label: 'Career Paths', color: 'text-green-400' },
-    { icon: Users, value: '8.5M+', label: 'Active Learners', color: 'text-purple-400' },
-    { icon: Award, value: '4.7', label: 'Average Rating', color: 'text-yellow-400' }
+    { label: 'Learning Paths', value: '50+', icon: Target },
+    { label: 'Active Learners', value: '2.5M+', icon: Users },
+    { label: 'Topics Covered', value: '500+', icon: BookOpen },
+    { label: 'Success Rate', value: '89%', icon: Award }
   ];
 
-  const featuredSkills = [
-    'JavaScript', 'React', 'Node.js', 'Python', 'TypeScript', 'AWS', 'Docker', 'Kubernetes',
-    'MongoDB', 'PostgreSQL', 'GraphQL', 'Next.js', 'Vue.js', 'Angular', 'Flutter', 'Swift'
-  ];
-
-  const filteredRoadmaps = roadmaps.filter(roadmap => {
-    const matchesSearch = roadmap.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         roadmap.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         roadmap.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCategory = selectedCategory === 'all' || roadmap.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Beginner': return 'text-green-400 bg-green-400/10';
+      case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10';
+      case 'Advanced': return 'text-red-400 bg-red-400/10';
+      default: return 'text-slate-400 bg-slate-400/10';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
       <header className="border-b border-slate-800/50 bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">D</span>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">D</span>
+                </div>
+                <span className="text-xl font-bold text-white">DevPath</span>
               </div>
-              <span className="text-xl font-bold text-white">DevPath</span>
             </div>
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex space-x-6">
+              <Link to="/" className="text-white font-medium">Home</Link>
               <Link to="/roadmaps" className="text-slate-300 hover:text-white transition-colors">Roadmaps</Link>
               <Link to="/topics" className="text-slate-300 hover:text-white transition-colors">Topics</Link>
-              <Link to="/progress" className="text-slate-300 hover:text-white transition-colors">Progress</Link>
-              <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+            </nav>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" className="border-slate-600 text-slate-300">
                 Sign In
               </Button>
               <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
                 Get Started
               </Button>
-            </nav>
+            </div>
           </div>
         </div>
       </header>
@@ -162,231 +155,253 @@ const Index = () => {
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              Developer
-              <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Roadmaps
-              </span>
-            </h1>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-              Step by step guides and paths to learn different tools or technologies. 
-              Community driven roadmaps, articles and resources for developers.
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
-                  placeholder="Search roadmaps, skills, or technologies..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 py-4 text-lg bg-slate-800/50 border-slate-700 text-white placeholder-slate-400 focus:border-blue-500"
-                />
-              </div>
-            </div>
-
-            {/* Featured Skills */}
-            <div className="flex flex-wrap justify-center gap-2 mb-12">
-              {featuredSkills.map((skill) => (
-                <Badge 
-                  key={skill} 
-                  variant="secondary" 
-                  className="bg-slate-800/50 text-slate-300 hover:bg-slate-700 cursor-pointer transition-colors"
-                  onClick={() => setSearchQuery(skill)}
-                >
-                  {skill}
-                </Badge>
-              ))}
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-              {stats.map((stat, index) => (
+          <h1 className="text-4xl md:text-7xl font-bold text-white mb-6">
+            Your Journey to
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Tech Mastery</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-slate-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+            Structured learning paths, comprehensive resources, and hands-on projects to transform you from beginner to professional developer.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Link to="/roadmaps">
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-4">
+                <Target className="w-5 h-5 mr-2" />
+                Explore Roadmaps
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+            <Link to="/topics">
+              <Button size="lg" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800 text-lg px-8 py-4">
+                <BookOpen className="w-5 h-5 mr-2" />
+                Browse Topics
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
                 <div key={index} className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Icon className="w-8 h-8 text-blue-400" />
                   </div>
-                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-slate-400 text-sm">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-slate-400">{stat.label}</div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Roadmaps Section */}
+      {/* Featured Content */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Role-based Roadmaps
-            </h2>
-            <p className="text-slate-300 text-lg">
-              Comprehensive career paths designed by industry experts
-            </p>
-          </div>
-
-          {/* Category Tabs */}
-          <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
-            <TabsList className="bg-slate-800/50 border border-slate-700">
-              {categories.map((category) => (
-                <TabsTrigger 
-                  key={category.id}
-                  value={category.id} 
-                  className="data-[state=active]:bg-slate-700 data-[state=active]:text-white"
-                >
-                  {category.label} ({category.count})
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  Start Your Journey
+                </h2>
+                <p className="text-slate-400 text-lg">
+                  Choose from curated learning paths or dive into specific topics
+                </p>
+              </div>
+              <TabsList className="bg-slate-800/50 border border-slate-700 mt-4 md:mt-0">
+                <TabsTrigger value="roadmaps" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white">
+                  Roadmaps
                 </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+                <TabsTrigger value="topics" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white">
+                  Topics
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
-          {/* Roadmaps Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRoadmaps.map((roadmap) => (
-              <Link key={roadmap.id} to={`/roadmaps/${roadmap.id}`}>
-                <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 group cursor-pointer h-full">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-3">
-                      <div className={`w-12 h-12 bg-gradient-to-r ${roadmap.color} rounded-xl flex items-center justify-center text-2xl`}>
-                        {roadmap.icon}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                        <span className="text-sm text-slate-400">{roadmap.rating}</span>
-                      </div>
-                    </div>
-                    <CardTitle className="text-white group-hover:text-blue-400 transition-colors text-lg">
-                      {roadmap.title}
-                    </CardTitle>
-                    <CardDescription className="text-slate-400 text-sm leading-relaxed">
-                      {roadmap.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {roadmap.skills.slice(0, 3).map((skill) => (
-                        <Badge key={skill} variant="secondary" className="bg-slate-700/50 text-slate-300 text-xs">
-                          {skill}
-                        </Badge>
-                      ))}
-                      {roadmap.skills.length > 3 && (
-                        <Badge variant="secondary" className="bg-slate-700/50 text-slate-300 text-xs">
-                          +{roadmap.skills.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
-                      <div className="flex items-center space-x-4">
-                        <span className="flex items-center">
-                          <BookOpen className="w-3 h-3 mr-1" />
-                          {roadmap.topics}
-                        </span>
-                        <span className="flex items-center">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {roadmap.duration}
-                        </span>
-                      </div>
-                      <Badge variant="outline" className="border-slate-600 text-slate-400 text-xs">
-                        {roadmap.difficulty}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-xs text-slate-500">
-                        <div className="flex items-center space-x-1">
-                          <Users className="w-3 h-3" />
-                          <span>{roadmap.learners} learners</span>
+            <TabsContent value="roadmaps" className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {featuredRoadmaps.map((roadmap) => {
+                  const Icon = roadmap.icon;
+                  return (
+                    <Link key={roadmap.id} to={`/roadmaps/${roadmap.id}`}>
+                      <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-[1.02] group">
+                        <CardContent className="p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className={`w-16 h-16 bg-gradient-to-r ${roadmap.color} rounded-xl flex items-center justify-center`}>
+                              <Icon className="w-8 h-8 text-white" />
+                            </div>
+                            {roadmap.trending && (
+                              <Badge className="bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300">
+                                <TrendingUp className="w-3 h-3 mr-1" />
+                                Trending
+                              </Badge>
+                            )}
+                          </div>
+                          <h3 className="text-xl font-semibold text-white mb-2">{roadmap.title}</h3>
+                          <p className="text-slate-400 mb-4">{roadmap.description}</p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            <Badge variant="outline" className="border-slate-600 text-slate-300">
+                              <BookOpen className="w-3 h-3 mr-1" />
+                              {roadmap.topics} Topics
+                            </Badge>
+                            <Badge variant="outline" className="border-slate-600 text-slate-300">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {roadmap.duration}
+                            </Badge>
+                            <Badge variant="outline" className="border-slate-600 text-slate-300">
+                              <Users className="w-3 h-3 mr-1" />
+                              {roadmap.learners}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-slate-400">{roadmap.difficulty}</span>
+                            <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  );
+                })}
+              </div>
+              <div className="text-center">
+                <Link to="/roadmaps">
+                  <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+                    View All Roadmaps
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="topics" className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {featuredTopics.map((topic) => (
+                  <Link key={topic.id} to={`/topics/${topic.id}`}>
+                    <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-[1.02] group">
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-16 h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center text-2xl">
+                            {topic.icon}
+                          </div>
+                          <div className="flex items-center space-x-1 text-yellow-400">
+                            <Star className="w-4 h-4 fill-current" />
+                            <span className="text-sm">{topic.rating}</span>
+                          </div>
                         </div>
-                      </div>
-                      <Button size="sm" variant="ghost" className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 group-hover:translate-x-1 transition-transform">
-                        Start Learning
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{topic.title}</h3>
+                        <p className="text-slate-400 mb-4">{topic.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <Badge className={getDifficultyColor(topic.difficulty)}>
+                            {topic.difficulty}
+                          </Badge>
+                          <Badge variant="outline" className="border-slate-600 text-slate-300">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {topic.duration}
+                          </Badge>
+                          <Badge variant="outline" className="border-slate-600 text-slate-300">
+                            <Users className="w-3 h-3 mr-1" />
+                            {topic.learners}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-400">Interactive Learning</span>
+                          <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+              <div className="text-center">
+                <Link to="/topics">
+                  <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+                    View All Topics
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-slate-900/50">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Why Choose DevPath?
             </h2>
-            <p className="text-slate-300 text-lg">
-              Everything you need to advance your tech career
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              Comprehensive learning platform designed for developers at every stage of their journey
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-blue-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">Interactive Progress</h3>
-                <p className="text-slate-400">Track your learning journey with visual progress indicators and milestone achievements.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Globe className="w-8 h-8 text-green-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">Community Driven</h3>
-                <p className="text-slate-400">Learn from a community of developers and contribute to help others grow.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Code className="w-8 h-8 text-purple-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">Hands-on Practice</h3>
-                <p className="text-slate-400">Real-world projects and coding exercises to reinforce your learning.</p>
-              </CardContent>
-            </Card>
+            {[
+              {
+                icon: Target,
+                title: 'Structured Learning Paths',
+                description: 'Follow industry-validated roadmaps designed by experts to guide your learning journey from beginner to professional.',
+                color: 'from-blue-500 to-cyan-500'
+              },
+              {
+                icon: Zap,
+                title: 'Hands-on Projects',
+                description: 'Build real-world projects and gain practical experience while learning. Every concept is reinforced with practice.',
+                color: 'from-purple-500 to-pink-500'
+              },
+              {
+                icon: Users,
+                title: 'Community Support',
+                description: 'Join millions of learners worldwide. Get help, share knowledge, and grow together in our vibrant community.',
+                color: 'from-green-500 to-emerald-500'
+              }
+            ].map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Card key={index} className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-colors">
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+                    <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <Card className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-blue-500/30">
-            <CardContent className="py-12 text-center">
-              <h3 className="text-3xl font-bold text-white mb-4">
-                Ready to Start Your Journey?
-              </h3>
-              <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-                Join millions of developers who are already using DevPath to advance their careers. 
-                Track your progress, bookmark important topics, and never lose sight of your goals.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  Create Free Account
-                </Button>
-                <Button size="lg" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
-                  Explore Roadmaps
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Start Your Journey?
+          </h2>
+          <p className="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
+            Join millions of developers who have transformed their careers with our comprehensive learning platform.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/roadmaps">
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-4">
+                <Play className="w-5 h-5 mr-2" />
+                Start Learning Now
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800 text-lg px-8 py-4">
+              <Github className="w-5 h-5 mr-2" />
+              View on GitHub
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/50 py-12 px-4">
+      <footer className="border-t border-slate-800/50 bg-slate-900/80 py-12 px-4">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -397,42 +412,54 @@ const Index = () => {
                 <span className="text-xl font-bold text-white">DevPath</span>
               </div>
               <p className="text-slate-400 mb-4">
-                Your companion for structured tech learning and career growth.
+                Your comprehensive guide to becoming a professional developer.
               </p>
-              <div className="flex items-center space-x-2 text-slate-400">
-                <span>Updated {new Date().getFullYear()}</span>
+              <div className="flex space-x-4">
+                <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white p-2">
+                  <Github className="w-4 h-4" />
+                </Button>
+                <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white p-2">
+                  <Twitter className="w-4 h-4" />
+                </Button>
+                <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white p-2">
+                  <Linkedin className="w-4 h-4" />
+                </Button>
               </div>
             </div>
+            
             <div>
-              <h4 className="font-semibold text-white mb-4">Roadmaps</h4>
+              <h3 className="text-white font-semibold mb-4">Learning Paths</h3>
               <ul className="space-y-2 text-slate-400">
-                <li><Link to="/roadmaps/frontend" className="hover:text-white transition-colors">Frontend</Link></li>
-                <li><Link to="/roadmaps/backend" className="hover:text-white transition-colors">Backend</Link></li>
-                <li><Link to="/roadmaps/devops" className="hover:text-white transition-colors">DevOps</Link></li>
-                <li><Link to="/roadmaps/fullstack" className="hover:text-white transition-colors">Full Stack</Link></li>
+                <li><Link to="/roadmaps/frontend" className="hover:text-white transition-colors">Frontend Development</Link></li>
+                <li><Link to="/roadmaps/backend" className="hover:text-white transition-colors">Backend Development</Link></li>
+                <li><Link to="/roadmaps/fullstack" className="hover:text-white transition-colors">Full Stack Development</Link></li>
+                <li><Link to="/roadmaps/data-scientist" className="hover:text-white transition-colors">Data Science</Link></li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="font-semibold text-white mb-4">Features</h4>
+              <h3 className="text-white font-semibold mb-4">Resources</h3>
               <ul className="space-y-2 text-slate-400">
-                <li><Link to="/progress" className="hover:text-white transition-colors">Progress Tracking</Link></li>
-                <li><Link to="/bookmarks" className="hover:text-white transition-colors">Bookmarks</Link></li>
-                <li><Link to="/search" className="hover:text-white transition-colors">Search</Link></li>
-                <li><Link to="/community" className="hover:text-white transition-colors">Community</Link></li>
+                <li><Link to="/topics" className="hover:text-white transition-colors">All Topics</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">Practice Projects</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Coding Challenges</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Interview Prep</a></li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="font-semibold text-white mb-4">Support</h4>
+              <h3 className="text-white font-semibold mb-4">Community</h3>
               <ul className="space-y-2 text-slate-400">
-                <li><Link to="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link to="/feedback" className="hover:text-white transition-colors">Feedback</Link></li>
-                <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Forum</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Newsletter</a></li>
               </ul>
             </div>
           </div>
+          
           <div className="border-t border-slate-800/50 mt-8 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 DevPath. Made with ❤️ for developers worldwide.</p>
+            <p>&copy; 2024 DevPath. All rights reserved. Built with ❤️ for developers worldwide.</p>
           </div>
         </div>
       </footer>
