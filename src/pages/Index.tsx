@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Header } from '@/components/Navigation';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('roadmaps');
@@ -122,44 +123,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="border-b border-slate-800/50 bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">D</span>
-                </div>
-                <span className="text-xl font-bold text-white">DevPath</span>
-              </div>
-            </div>
-            <nav className="hidden md:flex space-x-6">
-              <Link to="/" className="text-white font-medium">Home</Link>
-              <Link to="/roadmaps" className="text-slate-300 hover:text-white transition-colors">Roadmaps</Link>
-              <Link to="/topics" className="text-slate-300 hover:text-white transition-colors">Topics</Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" className="border-slate-600 text-slate-300">
-                Sign In
-              </Button>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[var(--gradient-secondary)]">
+      <Header />
 
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-7xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-7xl font-bold text-foreground mb-6">
             Your Journey to
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Tech Mastery</span>
+            <span className="bg-[var(--gradient-primary)] bg-clip-text text-transparent"> Tech Mastery</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
             Structured learning paths, comprehensive resources, and hands-on projects to transform you from beginner to professional developer.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -184,11 +158,11 @@ const Index = () => {
               const Icon = stat.icon;
               return (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Icon className="w-8 h-8 text-blue-400" />
+                  <div className="w-16 h-16 bg-[var(--gradient-accent)]/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Icon className="w-8 h-8 text-accent" />
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-slate-400">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
                 </div>
               );
             })}
