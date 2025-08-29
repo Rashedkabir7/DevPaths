@@ -12,6 +12,7 @@ export const Navigation = ({ className = "" }: NavigationProps) => {
     { path: '/', label: 'Home' },
     { path: '/roadmaps', label: 'Roadmaps' },
     { path: '/topics', label: 'Topics' },
+    { path: '/quiz', label: 'Quiz & Interview' },
   ];
 
   return (

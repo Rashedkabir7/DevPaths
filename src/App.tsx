@@ -6,8 +6,8 @@ import Roadmaps from '@/pages/Roadmaps';
 import Topics from '@/pages/Topics';
 import RoadmapDetail from '@/pages/RoadmapDetail';
 import TopicDetail from '@/pages/TopicDetail';
+import Quiz from '@/pages/Quiz';
 import NotFound from '@/pages/NotFound';
-import './App.css';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/roadmaps" element={<Roadmaps />} />
           <Route path="/topics" element={<Topics />} />
+          <Route path="/quiz" element={<Quiz />} />
           <Route path="/roadmaps/:roadmapId" element={<RoadmapDetail />} />
           <Route path="/topics/:topicId" element={<TopicDetail />} />
           <Route path="*" element={<NotFound />} />
