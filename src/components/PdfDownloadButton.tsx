@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, FileText, Loader2 } from 'lucide-react';
 import { generateRoadmapPDF, PDFRoadmapData } from '@/utils/pdfGenerator';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 interface PdfDownloadButtonProps {
   roadmapData: PDFRoadmapData;
